@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         div.innerHTML = 'Hi there!';
         div.className = 'border pad';
         
+        //document.body.appendChild(div);
         document.body.appendChild(div);
       }
 }, false);
