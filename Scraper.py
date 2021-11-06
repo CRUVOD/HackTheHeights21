@@ -1,5 +1,45 @@
-import requests, os, bs4
+import requests, os, bs4, json
 
+myJSON={"events":[]}
+
+def parseDate(pageText):
+    dateString="error"
+    dateStart = pageText.find("birth_date")+10 #no b because case-insensitive start
+    if(dateStart-10==-1):
+        print("ERROR at pageID=",pageID)
+        return "error"
+    dateEnd = pageText.index("\n",dateStart)#will error if no newline
+    
+    dateText=pageText[dateStart:dateEnd]
+    dateStart=dateText.find("irth date|")
+    if(dateStart!=-1):#if well-formatted
+        dateStart=dateText.find("|",dateStart)
+        dateEnd=dateText.find("|",dateStart+1)
+        #print(dateText[dateStart+1:dateStart+5])
+        bYear=dateText[dateStart+1:dateEnd]
+
+        dateStart=dateEnd
+        dateEnd=dateText.find("|",dateStart+1)
+        #print(dateText[dateStart+1:dateEnd])
+        bMonth=dateText[dateStart+1:dateEnd]
+        if(len(bMonth)<2):
+            bMonth="0"+bMonth
+
+        dateStart=dateEnd
+        dateEnd=dateText.find("|",dateStart+1)
+        #print(dateText[dateStart+1:dateEnd])
+        bDay=dateText[dateStart+1:dateEnd]
+        if(len(bDay)<2):
+            bDay="0"+bDay
+        dateString=bYear+"-"+bMonth+"-"+bDay
+    #print("PAGEID=",pageID,"START:",pageText[dateStart:dateEnd],":END")
+    #elif(dateText.find(",")!=-1): #later on will actually handle this
+        #print("This is weird")
+    return dateString
+
+#------------------
+#START OF MAIN CODE
+#------------------
 myUrl = "https://en.wikipedia.org/w/api.php"
 parameters={"action":"query","list":"allpages","apfrom":"Mexic","aplimit":100,"format":"json"}
 params2={"action":"query","prop":"info","inprop":"watchers"}#what pages to do on
@@ -34,34 +74,15 @@ print(pageText[dateStart:dateStart+10])
 #both of them end with a \n (as its a wikipedia table, so just detect when next \n
 DATA["query"]["pages"]["2411709"]["revisions"][0]["slots"]["main"]["*"]
 
-myJSON={"events",[]}
 for pageID in DATA["query"]["pages"]:
     pageText = DATA["query"]["pages"][pageID]["revisions"][0]["slots"]["main"]["*"]
-    dateStart = pageText.find("birth_date")+10 #no b because case-insensitive start
-    if(dateStart-10==-1):
-        print("ERROR at pageID=",pageID)
-        continue
-    dateEnd = pageText.index("\n",dateStart)#will error if no newline
     
-    dateText=pageText[dateStart:dateEnd]
-    dateStart=dateText.find("irth date|")
-    if(dateStart!=-1):#if well-formatted
-        dateStart=dateText.find("|",dateStart)
-        dateEnd=dateText.find("|",dateStart+1)
-        #print(dateText[dateStart+1:dateStart+5])
-        bYear=int(dateText[dateStart+1:dateEnd])
+    dateString=parseDate(pageText)
+    if(dateString!="error"):
+        myJSON["events"].append(dateString)
+    else:#idk what to do here
+        myJSON["events"].append("2000-01-01")
+    myJSON["events"].append(DATA["query"]["pages"][pageID]["title"])
 
-        dateStart=dateEnd
-        dateEnd=dateText.find("|",dateStart+1)
-        #print(dateText[dateStart+1:dateEnd])
-        bMonth=int(dateText[dateStart+1:dateEnd])
-
-        dateStart=dateEnd
-        dateEnd=dateText.find("|",dateStart+1)
-        #print(dateText[dateStart+1:dateEnd])
-        bDay=int(dateText[dateStart+1:dateEnd])
-    #print("PAGEID=",pageID,"START:",pageText[dateStart:dateEnd],":END")
-    #elif(dateText.find(",")!=-1): #later on will actually handle this
-        #print("This is weird")
-    
-
+with open("dateJSON.json","w") as myFile:
+    json.dump(myJSON,myFile)
