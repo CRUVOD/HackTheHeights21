@@ -56,3 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
       }, false);
+  
+function functionget() {
+  console.log(document.getElementById("searchfield").value);
+}

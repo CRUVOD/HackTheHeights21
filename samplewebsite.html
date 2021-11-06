@@ -13,14 +13,20 @@
     </head>
     <body>
         <div class = "header">
-            <div class = "image"></div>
-            <h1>Insert Title Here</h1>
-            <h2>???</h2>
+            <div class = "image">
+                <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
+            </div>
+            <div class = "title">
+                <h1>Insert Title Here</h1>
+            </div>
+            <div class = "image">
+                <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
+            </div>
         </div>
         <div class = "searchbox">
-            <form action="/form/submit" method="GET"> 
-                <input type="text" name="text" class="search" placeholder="Search here!">
-                <input type="submit" name="submit" class="submit" value="Search">
+            <form> 
+                <input type="text" name="text" class="search" id = "searchfield" placeholder="Search here!">
+                <input type="button" name="submit" class="submit" value="Search" onclick="functionget()">
             </form>
         </div>
         <div class ="timeline">

@@ -3,25 +3,38 @@
 *::after {
   box-sizing: border-box;
 }
-
-.header {
-	padding: 0px;
-	display: flex;
+.header { 
+  display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: flex-end;
+  justify-content: center;
 	background-color: white;
-  background-image: url('https://hacktheheights.org/img/hthlogo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
 }
-
 .image {
-  background-image: url('https://hacktheheights.org/img/hthlogo.png');
+  padding: 0px;
+	display: flex;
+  justify-content: flex-start;
+	background-color: white;
   background-size: contain;
   background-repeat: no-repeat;
+  width: 25%;
+  height: 25%;
 }
 
+.title {
+  padding: 0px;
+	background-color: white;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+}
+
+.whatdoido {
+  padding: 0px;
+	background-color: white;
+  justify-content: flex-end;
+  width: 25%;
+}
 .searchbox {
   padding: 1% 1%;
   background-color: #006E51;
