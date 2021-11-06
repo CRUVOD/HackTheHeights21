@@ -12,9 +12,9 @@
                         <div class="dateleft">{{ date }}</div>
                         <i class="icon fa fa-home"></i>
                         <div class="content">
-                        <h2>{{ content1 }}</h2>
+                        <h2>{{ content1[loop.index - 1] }}</h2>
                         <p>
-                            {{ content2 }}
+                            {{ content2[loop.index - 1] }}
                         </p>
                         </div>
                     </div>     
@@ -23,9 +23,9 @@
                         <div class="dateright">{{ date }}</div>
                         <i class="icon fa fa-home"></i>
                         <div class="content">
-                        <h2>{{ content1 }}</h2>
+                        <h2>{{ content1[loop.index - 1] }}</h2>
                         <p>
-                            {{ content2 }}
+                            {{ content2[loop.index - 1] }}
                         </p>
                         </div>
                     </div>     
