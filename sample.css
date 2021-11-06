@@ -4,10 +4,33 @@
   box-sizing: border-box;
 }
 
+.header {
+	padding: 0px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	background-color: white;
+  background-image: url('https://hacktheheights.org/img/hthlogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.image {
+  background-image: url('https://hacktheheights.org/img/hthlogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.searchbox {
+  padding: 1% 1%;
+  background-color: #006E51;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #ffffff;
+  background-color: rgb(252, 218, 177);
 }
 
 .timeline {

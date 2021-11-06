@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-        var current = document.querySelector('.container.right');
+        var current = document.querySelector('.contain');
         for(let i = 0; i < 4; i++) {
           if(i % 2 == 0) {
             var containerleft = document.createElement('div');
