@@ -1,6 +1,7 @@
 import requests, os, bs4, json
 
 myJSON={"events":[]}
+months={"january":"1","february":"2","march":"3","april":"4","may":"5","june":"6","july":"7","august":"8","september":"9","october":"10","november":"11","december":"12"}
 
 def parseDate(pageText):
     dateString="error"
@@ -15,26 +16,36 @@ def parseDate(pageText):
     if(dateStart!=-1):#if well-formatted
         dateStart=dateText.find("|",dateStart)
         dateEnd=dateText.find("|",dateStart+1)
-        #print(dateText[dateStart+1:dateStart+5])
         bYear=dateText[dateStart+1:dateEnd]
 
         dateStart=dateEnd
         dateEnd=dateText.find("|",dateStart+1)
-        #print(dateText[dateStart+1:dateEnd])
         bMonth=dateText[dateStart+1:dateEnd]
         if(len(bMonth)<2):
             bMonth="0"+bMonth
 
         dateStart=dateEnd
         dateEnd=dateText.find("|",dateStart+1)
-        #print(dateText[dateStart+1:dateEnd])
         bDay=dateText[dateStart+1:dateEnd]
         if(len(bDay)<2):
             bDay="0"+bDay
         dateString=bYear+"-"+bMonth+"-"+bDay
-    #print("PAGEID=",pageID,"START:",pageText[dateStart:dateEnd],":END")
-    #elif(dateText.find(",")!=-1): #later on will actually handle this
-        #print("This is weird")
+    elif(dateText.find(",")!=-1):
+        dateStart=dateText.find("=")
+        dateEnd=dateText.find(" ",dateText.find(",")-3)#finds space between month and day
+        bMonth=months[dateText[dateStart+1:dateEnd].strip().lower()]
+        dateStart=dateEnd+1
+        dateEnd=dateText.find(",")
+        bDay=dateText[dateStart:dateEnd]
+        dateStart=dateEnd+1
+        bYear=dateText[dateStart:]#end of dateText is the end of the year
+    else: #maybe its just the year?? will write code to parse later
+        return "error"
+    if(len(bMonth)<2):
+        bMonth="0"+bMonth
+    if(len(bDay)<2):
+        bDay="0"+bDay
+    dateString=bYear+"-"+bMonth+"-"+bDay
     return dateString
 
 #------------------
@@ -71,7 +82,7 @@ print(pageText[dateStart:dateStart+10])
 #apparently the wikitext isn't fully standardized for birth date, fails on Stephen F. Austin
 #one way is |birth_date = MNAME MDAY, 4YEAR
 #other was is |birth_date = {{birth date|1792|2|18|mf=y}}
-#both of them end with a \n (as its a wikipedia table, so just detect when next \n
+#both of them end with a \n (as its a wikipedia table), so just detect when next \n
 DATA["query"]["pages"]["2411709"]["revisions"][0]["slots"]["main"]["*"]
 
 for pageID in DATA["query"]["pages"]:
