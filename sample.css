@@ -122,14 +122,14 @@ body {
 }
 
 .container .content {
-  padding: 30px 90px 30px 30px;
+  padding: 15px 75px 15px 15px;
   background: #F6D155;
   position: relative;
   border-radius: 0 500px 500px 0;
 }
 
 .container.right .content {
-  padding: 30px 30px 30px 90px;
+  padding: 15px 15px 15px 75px;
   border-radius: 500px 0 0 500px;
 }
 
