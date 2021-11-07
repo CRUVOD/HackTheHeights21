@@ -11,14 +11,19 @@ function readTextFile(file, callback) {
 }
 
 function functionget() {
+  let jsondata = this;
   fetch("https://cdn.jsdelivr.net/gh/CRUVOD/HackTheHeights21/Testfile.json")
   .then(response => response.json())
   .then(json => {
-    files = json;
-    console.log(json);
+    jsondata = JSON.parse(json[0]);
+    console.log(jsondata);
+    console.log(jsondata[0]);
   })
+  var num = jsondata[0].date;
+  console.log(num);
+
   var current = document.querySelector('.contain');
-  for(let i = 0; i < 4; i++) {
+  for(let i = 0; i < num; i++) {
     if(i % 2 == 0) {
       var containerleft = document.createElement('div');
       containerleft.className = 'container left';
@@ -26,7 +31,7 @@ function functionget() {
       current = containerleft;
 
       var dataleft = document.createElement('div');
-      dataleft.innerHTML = 'some text';
+      dataleft.innerHTML = jsondata;
       dataleft.className = 'dataleft';
       current.append(dataleft);
 
