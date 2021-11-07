@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="description" content="Free Web tutorials">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Eliot, Roger, Morgan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class = "header">
+        <div class = "image" id = "image">
+            <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
+        </div>
+        <div class = "title">
+            <h1>Insert Title Here <span></span></h1>
+        </div>
+        <div class = "image" id = "image">
+            <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
+        </div>
+    </div>
+    <div class = "searchbox">
+    <form method="POST">
+        <input name="text" placeholder = "Search Here!">
+        <input type = "Submit">
+    </form>
+    </div>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

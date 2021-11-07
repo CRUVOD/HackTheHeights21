@@ -3,133 +3,57 @@ import requests, json
 months={"january":"1","february":"2","march":"3","april":"4","may":"5","june":"6","july":"7","august":"8","september":"9","october":"10","november":"11","december":"12"}
 
 def parseDate(pageText,dateType):
+    global months
     dateString="error"
-    if dateType=="Birth":
-        dateStart = pageText.find("birth_date")+10 #no b because case-insensitive start
-        if(dateStart-10==-1):
-            print("ERROR in parsing date")
+    dateStart = pageText.find(dateType)+len(dateType) #no b because case-insensitive start
+    if(dateStart-len(dateType)==-1):
+        return "error"
+    dateEnd = pageText.index("\n",dateStart)#will error if no newline
+    
+    dateText=pageText[dateStart:dateEnd]
+    dateStart=dateText.find("|")
+    if(dateStart!=-1):#if well-formatted
+        dateStart=dateText.find("|",dateStart)
+        dateEnd=dateText.find("|",dateStart+1)
+        bYear=dateText[dateStart+1:dateEnd]
+        if(not bYear[0].isdigit()):
             return "error"
-        dateEnd = pageText.index("\n",dateStart)#will error if no newline
-        
-        dateText=pageText[dateStart:dateEnd]
-        dateStart=dateText.find("irth date|")
-        if(dateStart!=-1):#if well-formatted
-            dateStart=dateText.find("|",dateStart)
-            dateEnd=dateText.find("|",dateStart+1)
-            bYear=dateText[dateStart+1:dateEnd]
 
-            dateStart=dateEnd
-            dateEnd=dateText.find("|",dateStart+1)
-            bMonth=dateText[dateStart+1:dateEnd]
-            if(len(bMonth)<2):
-                bMonth="0"+bMonth
-
-            dateStart=dateEnd
-            dateEnd=dateText.find("|",dateStart+1)
-            bDay=dateText[dateStart+1:dateEnd]
-            if(len(bDay)<2):
-                bDay="0"+bDay
-            dateString=bYear+"-"+bMonth+"-"+bDay
-        elif(dateText.find(",")!=-1):
-            dateStart=dateText.find("=")
-            dateEnd=dateText.find(" ",dateText.find(",")-3)#finds space between month and day
-            bMonth=months[dateText[dateStart+1:dateEnd].strip().lower()]
-            dateStart=dateEnd+1
-            dateEnd=dateText.find(",")
-            bDay=dateText[dateStart:dateEnd]
-            dateStart=dateEnd+2
-            bYear=dateText[dateStart:dateStart+4]
-        else: #maybe its just the year?? will write code to parse later
-            return "error"
+        dateStart=dateEnd
+        dateEnd=dateText.find("|",dateStart+1)
+        bMonth=dateText[dateStart+1:dateEnd]
         if(len(bMonth)<2):
             bMonth="0"+bMonth
-        if(len(bDay)<2):
-            bDay="0"+bDay
+
+        dateStart=dateEnd+1
+        dateEnd=dateStart+2
+        bDay=dateText[dateStart:dateEnd]
+        if(not bDay[1].isdigit()):#one digit day and no leading 0
+            bDay="0"+bDay[0]
         dateString=bYear+"-"+bMonth+"-"+bDay
-    elif dateType=="Death":
-        dateStart = pageText.find("death_date")+10
-        if(dateStart-10==-1):
-            print("ERROR in parsing date")
-            return "error"
-        dateEnd = pageText.index("\n",dateStart)#will error if no newline
-        
-        dateText=pageText[dateStart:dateEnd]
-        dateStart=dateText.find("date and age|")
-        if(dateStart!=-1):#if well-formatted
-            dateStart=dateText.find("|",dateStart)
-            dateEnd=dateText.find("|",dateStart+1)
-            bYear=dateText[dateStart+1:dateEnd]
-
-            dateStart=dateEnd
-            dateEnd=dateText.find("|",dateStart+1)
-            bMonth=dateText[dateStart+1:dateEnd]
-            if(len(bMonth)<2):
-                bMonth="0"+bMonth
-                
-            dateStart=dateEnd+1
-            dateEnd=dateStart+3
-            bDay=dateText[dateStart:dateEnd]
-            if(not bDay[1].isdigit()):#one digit day and no leading 0
-                print("its odd"+bYear+bMonth)
-                bDay="0"+bDay[0]
-            dateString=bYear+"-"+bMonth+"-"+bDay
-        elif(dateText.find(",")!=-1):
-            dateStart=dateText.find("=")
-            dateEnd=dateText.find(" ",dateText.find(",")-3)#finds space between month and day
+    elif(dateText.find(",")!=-1):
+        dateStart=dateText.find("=")
+        dateEnd=dateText.find(" ",dateText.find(",")-3)#finds space between month and day
+        try:
             bMonth=months[dateText[dateStart+1:dateEnd].strip().lower()]
-            dateStart=dateEnd+1
-            dateEnd=dateText.find(",")
-            bDay=dateText[dateStart:dateEnd]
-            dateStart=dateEnd+2
-            bYear=dateText[dateStart:dateStart+4]
-        else: #maybe its just the year?? will write code to parse later
+        except:
             return "error"
-        if(len(bMonth)<2):
-            bMonth="0"+bMonth
-        if(len(bDay)<2):
-            bDay="0"+bDay
-        dateString=bYear+"-"+bMonth+"-"+bDay
-    elif dateType=="date":
-        dateStart = pageText.find("|date")+5
-        if(dateStart-5==-1):
-            print("ERROR in parsing date")
+        dateStart=dateEnd+1
+        dateEnd=dateText.find(",")
+        bDay=dateText[dateStart:dateEnd]
+        dateStart=dateEnd+2
+        bYear=dateText[dateStart:dateStart+4]
+    else: #maybe its just the year?? will write code to parse later
+        bYear=dateText[-4:]
+        if(not bYear.isdigit()):
             return "error"
-        dateEnd = pageText.index("\n",dateStart)#will error if no newline
-        
-        dateText=pageText[dateStart:dateEnd]
-        dateStart=dateText.find("start date and age|") #this type doesn't have ending |
-        if(dateStart!=-1):#if well-formatted
-            dateStart=dateText.find("|",dateStart)
-            dateEnd=dateText.find("|",dateStart+1)
-            bYear=dateText[dateStart+1:dateEnd]
-
-            dateStart=dateEnd
-            dateEnd=dateText.find("|",dateStart+1)
-            bMonth=dateText[dateStart+1:dateEnd]
-            if(len(bMonth)<2):
-                bMonth="0"+bMonth
-
-            dateStart=dateEnd+1
-            dateEnd=dateStart+3
-            bDay=dateText[dateStart:dateEnd]
-            if(not bDay[1].isdigit()):#one digit day and no leading 0
-                bDay="0"+bDay[0]
-            dateString=bYear+"-"+bMonth+"-"+bDay
-        elif(dateText.find(",")!=-1):
-            dateStart=dateText.find("=")
-            dateEnd=dateText.find(" ",dateText.find(",")-3)#finds space between month and day
-            bMonth=months[dateText[dateStart+1:dateEnd].strip().lower()]
-            dateStart=dateEnd+1
-            dateEnd=dateText.find(",")
-            bDay=dateText[dateStart:dateEnd]
-            dateStart=dateEnd+2
-            bYear=dateText[dateStart:dateStart+4]
-        else: #maybe its just the year?? will write code to parse later
-            return "error"
-        if(len(bMonth)<2):
-            bMonth="0"+bMonth
-        if(len(bDay)<2):
-            bDay="0"+bDay
+        bMonth="01"
+        bDay="01"
+    if(len(bMonth)<2):
+        bMonth="0"+bMonth
+    if(len(bDay)<2):
+        bDay="0"+bDay
+    dateString=bYear+"-"+bMonth+"-"+bDay
     return dateString
 
 def scraperFunc(category="19th-century_Mexican_politicians"):
@@ -160,8 +84,8 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
     print(pageText[dateStart:dateStart+10])
 
     #for page in PAGES:
-
     '''
+    
     #params4
     #apparently the wikitext isn't fully standardized for birth date, fails on Stephen F. Austin
     #one way is |birth_date = MNAME MDAY, 4YEAR
@@ -171,24 +95,30 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
     #DATA["query"]["pages"]["2411709"]["revisions"][0]["slots"]["main"]["*"]
 
     myJSON={}
-
-    dateTypes=["Birth","Death"]#dates we are interested in for the query, each one is a new entry
-
+    dateStrings=["Birth of ","Death of ",""]
+    dateTypes=["birth_date","death_date","date"]#dates we are interested in for the query, each one is a new entry
+    
     for pageID in DATA["query"]["pages"]:
         myPage=DATA["query"]["pages"][pageID]
-        for dateType in dateTypes:
+        badDate=0
+        for i in range(len(dateTypes)):
             pageTitle=myPage["title"]
-            pageTitle=dateType + " of " + pageTitle
+            pageTitle=dateStrings[i] + pageTitle
             myJSON[pageTitle]=[]
             #print(pageID)
             pageText = myPage["revisions"][0]["slots"]["main"]["*"]
-            
-            dateString=parseDate(pageText,dateType)
+
+            if(dateTypes[i]!="date" or badDate>1):#date is for singular events, only check if not birth/death since generic name
+                dateString=parseDate(pageText,dateTypes[i])
             
             if(dateString!="error"):
                 myJSON[pageTitle].append(dateString)
             else:#idk what to do here
-                myJSON[pageTitle].append("2000-01-01")
+                print("Error in parsing",pageTitle)
+                badDate+=1
+                del myJSON[pageTitle]
+                continue
+                myJSON[pageTitle].append("3000-01-01")
             try:
                 myJSON[pageTitle].append(myPage["description"])
             except:
