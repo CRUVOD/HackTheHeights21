@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+<head>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
     <meta name="description" content="Free Web tutorials">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="Eliot, Roger, Morgan">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} {% endblock %}Hack The Heights</title>
+    <title>{% block title %}{% endblock %}</title>
     <style>
         nav a {
             color: #d64161;
@@ -30,15 +30,12 @@
             <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
         </div>
     </div>
-    <nav>
-        <a href="#">HTH</a>
-        <a href="#">About</a>
-    </nav>
-    <hr>
+    <div class = "searchbox">
     <form method="POST">
-        <input name="text">
-        <input type="Submit">
+        <input name="text" placeholder = "Search Here!">
+        <input type = "Submit">
     </form>
+    </div>
     <div class="content">
         {% block content %} {% endblock %}
     </div>

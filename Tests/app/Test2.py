@@ -12,7 +12,7 @@ def index():
     content2 = ['']
     dates = ['']
     return render_template('index.html', 
-                           title='Welcome', 
+                           title='Hack The Heights', 
                            dates=dates,
                            content1=content1,
                            content2=content2)
