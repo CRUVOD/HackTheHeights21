@@ -56,15 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
             content.append(p);
           }
         }
-        document.getElementsById("image").style.visibility = "hidden";
       }, false);
   
 function functionget() {
-  console.log(document.getElementById("searchfield").value);
-  readTextFile("Testfile.json", function(text){
-  var data = JSON.parse(text);
-  console.log(data);
-  })
+  fetch("https://cdn.jsdelivr.net/gh/CRUVOD/HackTheHeights21/Testfile.json")
+  .then(response => response.json())
+  .then(json => console.log(json));
 }
 
 function readTextFile(file, callback) {
@@ -78,6 +75,3 @@ function readTextFile(file, callback) {
   }
   rawFile.send(null);
 }
-fetch("https://newexample.s3.ir-thr-at1.arvanstorage.com/example.json")
-  .then(response => response.json())
-  .then(json => console.log(json));
