@@ -7,7 +7,7 @@ def parseDate(pageText,dateType):
     if dateType=="Birth":
         dateStart = pageText.find("birth_date")+10 #no b because case-insensitive start
         if(dateStart-10==-1):
-            print("ERROR at pageID=",pageID)
+            print("ERROR in parsing date")
             return "error"
         dateEnd = pageText.index("\n",dateStart)#will error if no newline
         
@@ -49,7 +49,7 @@ def parseDate(pageText,dateType):
     elif dateType=="Death":
         dateStart = pageText.find("death_date")+10
         if(dateStart-10==-1):
-            print("ERROR at pageID=",pageID)
+            print("ERROR in parsing date")
             return "error"
         dateEnd = pageText.index("\n",dateStart)#will error if no newline
         
@@ -92,7 +92,7 @@ def parseDate(pageText,dateType):
     elif dateType=="date":
         dateStart = pageText.find("|date")+5
         if(dateStart-5==-1):
-            print("ERROR at pageID=",pageID)
+            print("ERROR in parsing date")
             return "error"
         dateEnd = pageText.index("\n",dateStart)#will error if no newline
         
