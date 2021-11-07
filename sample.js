@@ -1,9 +1,6 @@
 var jsondata = [];
 
 function functionget() {
-
-  var text = document.getElementById('searchfield');
-  console.log(text);
   fetch("https://raw.githubusercontent.com/CRUVOD/HackTheHeights21/main/Testfile.json")
   .then(response => response.json())
   .then(json => {
