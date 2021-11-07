@@ -1,6 +1,5 @@
 import requests, os, bs4, json
 
-myJSON={"events":[]}
 months={"january":"1","february":"2","march":"3","april":"4","may":"5","june":"6","july":"7","august":"8","september":"9","october":"10","november":"11","december":"12"}
 
 def parseDate(pageText):
@@ -58,7 +57,8 @@ params2={"action":"query","prop":"info","inprop":"watchers"}#what pages to do on
 pageName="Stephen_F._Austin"
 params3={"action":"parse","page":pageName,"format":"json"}
 category="19th-century_Mexican_politicians"
-params4={"action":"query","generator":"categorymembers","gcmtitle":("Category:"+category),"prop":"revisions","rvslots":"*","rvprop":"content","format":"json"}#idk rvslots
+VIEWDAYS=5
+params4={"action":"query","generator":"categorymembers","gcmtitle":("Category:"+category),"prop":"revisions|pageviews|description","rvslots":"*","rvprop":"content","pvipdays":VIEWDAYS,"format":"json"}#idk rvslots
          #"prop":"pageviews" #pageviews returns views for past n days
 
 myData = requests.get(myUrl, params=params4)
@@ -85,15 +85,37 @@ print(pageText[dateStart:dateStart+10])
 #both of them end with a \n (as its a wikipedia table), so just detect when next \n
 DATA["query"]["pages"]["2411709"]["revisions"][0]["slots"]["main"]["*"]
 
+myJSON={}
+
 for pageID in DATA["query"]["pages"]:
+    pageTitle=DATA["query"]["pages"][pageID]["title"]
+    myJSON[pageTitle]=[]
+    print(pageID)
     pageText = DATA["query"]["pages"][pageID]["revisions"][0]["slots"]["main"]["*"]
     
     dateString=parseDate(pageText)
     if(dateString!="error"):
-        myJSON["events"].append(dateString)
+        myJSON[pageTitle].append(dateString)
     else:#idk what to do here
-        myJSON["events"].append("2000-01-01")
-    myJSON["events"].append(DATA["query"]["pages"][pageID]["title"])
+        myJSON[pageTitle].append("2000-01-01")
+    try:
+        myJSON[pageTitle].append(DATA["query"]["pages"][pageID]["description"])
+    except:
+        #print("No short description")
+        myJSON[pageTitle].append(DATA["query"]["pages"][pageID]["title"])#just has title as description
+    try:
+        viewAvg=0
+        for viewday in DATA["query"]["pages"][pageID]["pageviews"]:
+            if(DATA["query"]["pages"][pageID]["pageviews"][viewday]==None):
+                continue
+            viewAvg+=DATA["query"]["pages"][pageID]["pageviews"][viewday]
+        viewAvg/=VIEWDAYS
+        myJSON[pageTitle].append(viewAvg)
+    except:
+        #print("No pageview data")
+        myJSON[pageTitle].append(5)
+
+myJSON=sorted(myJSON.items(), key=lambda x:x[1][0])#python 3.6+ required
 
 with open("dateJSON.json","w") as myFile:
     json.dump(myJSON,myFile)
