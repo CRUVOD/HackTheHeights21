@@ -109,10 +109,10 @@ body {
 .container::after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 16px; /*change*/
+  height: 16px; /*change*/
   top: calc(50% - 8px);
-  right: -8px;
+  right: -8px; /*change*/
   background: #ffffff;
   border: 2px solid #006E51;
   border-radius: 16px;
@@ -120,7 +120,7 @@ body {
 }
 
 .container.right::after {
-  left: -8px;
+  left: -8px; /*change*/
 }
 
 .container::before {
