@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+
         var current = document.querySelector('.contain');
         for(let i = 0; i < 4; i++) {
           if(i % 2 == 0) {
@@ -55,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             content.append(p);
           }
         }
+        document.getElementsById("image").style.visibility = "hidden";
       }, false);
   
 function functionget() {
@@ -70,9 +72,12 @@ function readTextFile(file, callback) {
   rawFile.overrideMimeType("application/json");
   rawFile.open("GET", file, true);
   rawFile.onreadystatechange = function() {
-      if (rawFile.status == "200") {
+      if (rawFile.readyState === 4 && rawFile.status == 200) {
           callback(rawFile.responseText);
       }
   }
   rawFile.send(null);
 }
+fetch("https://newexample.s3.ir-thr-at1.arvanstorage.com/example.json")
+  .then(response => response.json())
+  .then(json => console.log(json));
