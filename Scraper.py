@@ -108,7 +108,6 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
             pageTitle=dateStrings[i] + pageTitle
             myJSON[pageTitle]=[]
             #print(pageID)
-            print(myPage)
             
             try:
                 pageText = myPage["revisions"][0]["slots"]["main"]["*"]
