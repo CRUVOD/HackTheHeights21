@@ -132,7 +132,7 @@ def parseDate(pageText,dateType):
             bDay="0"+bDay
     return dateString
 
-def scraperFunc(category="19th-century_Mexican_politicians")
+def scraperFunc(category="19th-century_Mexican_politicians"):
     #------------------
     #START OF MAIN CODE
     #------------------
@@ -208,6 +208,7 @@ def scraperFunc(category="19th-century_Mexican_politicians")
             myJSON[pageTitle].append(myPage["fullurl"])
 
     myJSON=sorted(myJSON.items(), key=lambda x:x[1][0])#python 3.6+ required
+    return myJSON
 
 #with open("dateJSON.json","w") as myFile:
 #    json.dump(myJSON,myFile)
