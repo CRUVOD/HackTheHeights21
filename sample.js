@@ -1,18 +1,19 @@
 var jsondata = [];
 
 function functionget() {
+
+  var text = document.getElementById('searchfield');
+  console.log(text);
   fetch("https://raw.githubusercontent.com/CRUVOD/HackTheHeights21/main/Testfile.json")
   .then(response => response.json())
   .then(json => {
       jsondata = json;
     }
-    )
-
+  )
   var current = document.querySelector('.contain');
   var counter = 0;
+  
   for(let i in jsondata) {
-    console.log(i);
-    console.log(counter);
     if(counter % 2 == 0) {
       var containerleft = document.createElement('div');
       containerleft.className = 'container left';
@@ -70,6 +71,6 @@ function functionget() {
       content.append(p);
 
       counter += 1;
-    }
+   }
   }
 }
