@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
 <head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - HTH</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Free Web tutorials">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Eliot, Roger, Morgan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}Hack The Heights</title>
     <style>
         nav a {
             color: #d64161;
@@ -19,7 +24,10 @@
             <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
         </div>
         <div class = "title">
-            <h2>Insert Title Here</h2>
+            <h1>Insert Title Here <span></span></h1>
+        </div>
+        <div class = "image" id = "image">
+            <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
         </div>
     </div>
     <nav>
