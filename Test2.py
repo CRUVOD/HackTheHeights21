@@ -11,7 +11,11 @@ approvedList = ["19th-century_Canadian_politicians",
                "Scientists_from_Boston",
                "British_rock_and_roll_musicians",
                "French_Army_generals_of_World_War_II",
-               "19th-century_Mexican_politicians"]
+               "19th-century_Mexican_politicians",
+               "Structuralists",
+                "Swedish_computer_scientists",
+                "Presidents_of_the_United_States"
+                ]
 
 @app.route('/')
 @app.route('/index')
