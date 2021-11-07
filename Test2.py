@@ -8,8 +8,9 @@ app = Flask(__name__)
 
 approvedList = ["19th-century_Canadian_politicians",
                 "Jazz_accordionists",
-                "Critics_of_postmodernism",
-               " Scientists_from_Boston",
+               "Scientists_from_Boston",
+               "British_rock_and_roll_musicians",
+               "French_Army_generals_of_World_War_II",
                "19th-century_Mexican_politicians"]
 
 @app.route('/')
@@ -31,8 +32,13 @@ def my_form_post():
     title = []
     content = []
     dates = []
-    print(difflib.get_close_matches(processed_text, approvedList,1,0)[0])
-    a = Scraper.scraperFunc(difflib.get_close_matches(processed_text, approvedList,1,0)[0])
+    print(processed_text)
+    tempLower = []
+    for i in approvedList:
+        tempLower.append(i.lower())
+    print(difflib.get_close_matches(processed_text.lower(), tempLower,3,0))
+    index = tempLower.index(difflib.get_close_matches(processed_text.lower(), tempLower,3,0)[0])
+    a = Scraper.scraperFunc(approvedList[index])
     
     for item in a:
         title.append(item[0])
