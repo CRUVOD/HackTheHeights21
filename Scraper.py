@@ -118,7 +118,9 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
 
             if(dateTypes[i]!="date" or badDate>1):#date is for singular events, only check if not birth/death since generic name
                 dateString=parseDate(pageText,dateTypes[i])
-            
+            else:
+                del myJSON[pageTitle]
+                continue
             if(dateString!="error"):
                 myJSON[pageTitle].append(dateString)
             else:#idk what to do here
