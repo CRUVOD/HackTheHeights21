@@ -66,9 +66,11 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
     #pageName="Otto_von_Bismarck"
     #pageName="Stephen_F._Austin"
     #params3={"action":"parse","page":pageName,"format":"json"}
+
+    #category="Critics_of_postmodernism" #TEST< PLEASEE REMOVE!!!!!!!!!!!!!!
     VIEWDAYS=5
     params4={"action":"query","generator":"categorymembers","gcmtitle":("Category:"+category),"gcmlimit":200,"gcmtype":"page","prop":"revisions|pageviews|description|info","rvslots":"main","rvprop":"content","pvipdays":VIEWDAYS,"inprop":"url","format":"json"}#idk rvslots
-
+    
     myData = requests.get(myUrl, params=params4)
     DATA = myData.json()
     #print(type(DATA)) #should be dictionary
@@ -106,7 +108,13 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
             pageTitle=dateStrings[i] + pageTitle
             myJSON[pageTitle]=[]
             #print(pageID)
-            pageText = myPage["revisions"][0]["slots"]["main"]["*"]
+            print(myPage)
+            
+            try:
+                pageText = myPage["revisions"][0]["slots"]["main"]["*"]
+            except:
+                print("Error finding page text")
+                continue
 
             if(dateTypes[i]!="date" or badDate>1):#date is for singular events, only check if not birth/death since generic name
                 dateString=parseDate(pageText,dateTypes[i])
