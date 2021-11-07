@@ -75,6 +75,9 @@ h1 span {
 .searchresult { 
   padding: 1% 1%;
   color: white;
+  display: flex;
+  justify-content: center;
+  text-align: center;
   background-color: #006E51;
 }
 
