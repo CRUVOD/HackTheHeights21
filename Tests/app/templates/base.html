@@ -30,12 +30,20 @@
             <img src = "https://hacktheheights.org/img/hthlogo.png" width = 100% height = 100%>
         </div>
     </div>
+    <div class = "searchtitle">
     <div class = "searchbox">
-    <form method="POST">
-        <input name="text" placeholder = "Search Here!">
-        <input type = "Submit">
-    </form>
+        <form class = "form" method="POST">
+            <input name="text" placeholder = "Search Here!">
+            <input type = "Submit">
+        </form>
     </div>
+    </div>
+    <div class ="searchtitle1">
+        <div class = "searchresult">
+            Text
+        </div>
+    </div>
+
     <div class="content">
         {% block content %} {% endblock %}
     </div>

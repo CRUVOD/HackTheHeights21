@@ -10,6 +10,12 @@
   justify-content: center;
 	background-color: white;
 }
+
+.form {
+  display: inline-block;
+  width: 25%;
+}
+
 .image {
   padding: 0px;
 	display: flex;
@@ -63,6 +69,12 @@ h1 span {
 }
 .searchbox {
   padding: 1% 1%;
+  background-color: #006E51;
+}
+
+.searchresult { 
+  padding: 1% 1%;
+  color: white;
   background-color: #006E51;
 }
 
