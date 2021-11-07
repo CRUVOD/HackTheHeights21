@@ -21,6 +21,32 @@
   height: 15%;
 }
 
+h1 {
+  font-size: 35px;
+  font-family: Arial, sans-serif;
+  padding-right: 35px;
+  display: inline-block;
+}
+
+h1 span {
+  height: 35px;
+  margin-bottom: -4px;
+  width: 2px;
+  background: black;
+  opacity: 0;
+  display: inline-block;
+  animation: blink 0.7s linear infinite alternate;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .title {
   padding: 0px;
 	background-color: white;
@@ -83,10 +109,10 @@ body {
 .container::after {
   content: '';
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 16px; /*change*/
+  height: 16px; /*change*/
   top: calc(50% - 8px);
-  right: -8px;
+  right: -8px; /*change*/
   background: #ffffff;
   border: 2px solid #006E51;
   border-radius: 16px;
@@ -94,7 +120,7 @@ body {
 }
 
 .container.right::after {
-  left: -8px;
+  left: -8px; /*change*/
 }
 
 .container::before {
