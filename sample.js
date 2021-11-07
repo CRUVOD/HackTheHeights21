@@ -1,34 +1,27 @@
-function readTextFile(file, callback) {
-  var rawFile = new XMLHttpRequest();
-  rawFile.overrideMimeType("application/json");
-  rawFile.open("GET", file, true);
-  rawFile.onreadystatechange = function() {
-      if (rawFile.readyState === 4 && rawFile.status == 200) {
-          callback(rawFile.responseText);
-      }
-  }
-  rawFile.send(null);
-}
+var jsondata = [];
 
 function functionget() {
-  let jsondata = this;
-  fetch("https://cdn.jsdelivr.net/gh/CRUVOD/HackTheHeights21/Testfile2.json")
+  fetch("https://raw.githubusercontent.com/CRUVOD/HackTheHeights21/main/Testfile.json")
   .then(response => response.json())
   .then(json => {
-    jsondata = json[0];
-    console.log(jsondata);
-  })
+      jsondata = json;
+    }
+    )
 
   var current = document.querySelector('.contain');
-  for(let i = 0; i < 10; i++) {
-    if(i % 2 == 0) {
+  var counter = 0;
+  for(let i in jsondata) {
+    console.log(i);
+    console.log(counter);
+    if(counter % 2 == 0) {
       var containerleft = document.createElement('div');
       containerleft.className = 'container left';
       current.insertAdjacentElement('afterend', containerleft);
       current = containerleft;
 
       var dataleft = document.createElement('div');
-      dataleft.innerHTML = 'jsondata';
+      console.log(jsondata[i][0]);
+      dataleft.innerHTML = jsondata[i][0];
       dataleft.className = 'dataleft';
       current.append(dataleft);
 
@@ -41,12 +34,14 @@ function functionget() {
       current.append(content);
 
       var h2 = document.createElement('h2');
-      h2.innerHTML = 'text here';
+      h2.innerHTML = jsondata[i][1];
       content.append(h2);
 
       var p = document.createElement('p');
-      p.innerHTML = 'paragraph here';
+      p.innerHTML = jsondata[i][2];
       content.append(p);
+
+      counter += 1;
     } else {
       var containerright = document.createElement('div');
       containerright.className = 'container right';
@@ -54,7 +49,7 @@ function functionget() {
       current = containerright;
 
       var dataright = document.createElement('div');
-      dataright.innerHTML = 'some text';
+      dataright.innerHTML = jsondata[i][0];
       dataright.className = 'dataright';
       current.append(dataright);
 
@@ -67,12 +62,14 @@ function functionget() {
       current.append(content);
 
       var h2 = document.createElement('h2');
-      h2.innerHTML = 'text here';
+      h2.innerHTML = jsondata[i][1];
       content.append(h2);
 
       var p = document.createElement('p');
-      p.innerHTML = 'paragraph here';
+      p.innerHTML = jsondata[i][2];
       content.append(p);
+
+      counter += 1;
     }
   }
 }
