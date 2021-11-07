@@ -23,7 +23,7 @@ function functionget() {
   console.log(num);
 
   var current = document.querySelector('.contain');
-  for(let i = 0; i < num; i++) {
+  for(let i = 0; i < 10; i++) {
     if(i % 2 == 0) {
       var containerleft = document.createElement('div');
       containerleft.className = 'container left';
@@ -31,7 +31,7 @@ function functionget() {
       current = containerleft;
 
       var dataleft = document.createElement('div');
-      dataleft.innerHTML = jsondata;
+      dataleft.innerHTML = 'jsondata';
       dataleft.className = 'dataleft';
       current.append(dataleft);
 
