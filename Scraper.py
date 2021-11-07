@@ -113,6 +113,7 @@ def scraperFunc(category="19th-century_Mexican_politicians"):
                 pageText = myPage["revisions"][0]["slots"]["main"]["*"]
             except:
                 print("Error finding page text")
+                del myJSON[pageTitle]
                 continue
 
             if(dateTypes[i]!="date" or badDate>1):#date is for singular events, only check if not birth/death since generic name
