@@ -2,8 +2,15 @@ from flask import Flask, request
 from flask import render_template
 
 import Scraper
+import difflib
 
 app = Flask(__name__)
+
+approvedList = ["19th-century_Canadian_politicians",
+                "Jazz_accordionists",
+                "Critics_of_postmodernism",
+               " Scientists_from_Boston",
+               "19th-century_Mexican_politicians"]
 
 @app.route('/')
 @app.route('/index')
@@ -24,7 +31,10 @@ def my_form_post():
     title = []
     content = []
     dates = []
-    a = Scraper.scraperFunc()
+    print(approvedList)
+    print(processed_text)
+    print(difflib.get_close_matches(processed_text, approvedList,1,0))
+    a = Scraper.scraperFunc(difflib.get_close_matches(processed_text, approvedList,1,0)[0])
     
     for item in a:
         title.append(item[0])
