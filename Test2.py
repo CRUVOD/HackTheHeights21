@@ -47,6 +47,7 @@ def my_form_post():
         
     
     return render_template('index.html', 
+                           SearchResult = approvedList[index],
                            title='Welcome', 
                            dates=dates,
                            content1=title,

@@ -5,6 +5,12 @@
 <html>
     
     <body>
+        <div class ="searchtitle1">
+            <div class = "searchresult">
+                {{SearchResult}}
+            </div>
+        </div>
+
         <div class="timeline">
             {% for date in dates %}
                 {% if loop.index % 2 == 0 %}
