@@ -12,15 +12,12 @@ function readTextFile(file, callback) {
 
 function functionget() {
   let jsondata = this;
-  fetch("https://cdn.jsdelivr.net/gh/CRUVOD/HackTheHeights21/Testfile.json")
+  fetch("https://cdn.jsdelivr.net/gh/CRUVOD/HackTheHeights21/Testfile2.json")
   .then(response => response.json())
   .then(json => {
-    jsondata = JSON.parse(json[0]);
+    jsondata = json[0];
     console.log(jsondata);
-    console.log(jsondata[0]);
   })
-  var num = jsondata[0].date;
-  console.log(num);
 
   var current = document.querySelector('.contain');
   for(let i = 0; i < 10; i++) {
